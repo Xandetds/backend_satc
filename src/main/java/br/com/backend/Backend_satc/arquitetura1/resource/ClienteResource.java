@@ -1,10 +1,11 @@
 package br.com.backend.Backend_satc.arquitetura1.resource;
 
-import br.com.backend.Backend_satc.arquitetura1.dto.ClienteDTO;
-import br.com.backend.Backend_satc.arquitetura1.entity.Cliente;
+import br.com.backend.Backend_satc.arquitetura1.dto.request.ClienteRequestDTO;
+import br.com.backend.Backend_satc.arquitetura1.dto.response.ClienteResponseDTO;
 import br.com.backend.Backend_satc.arquitetura1.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,16 +14,32 @@ import java.util.List;
 @RequestMapping("/clientes")
 public class ClienteResource {
 
-    @Autowired
-    private ClienteService service;
+    @Autowired private ClienteService service;
 
     @PostMapping
-    public Cliente criarCliente(@Valid @RequestBody ClienteDTO dto) {
-        return service.criarCliente(dto);
+    public ResponseEntity<ClienteResponseDTO> criar(@Valid @RequestBody ClienteRequestDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.criar(dto));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.buscarPorId(id));
     }
 
     @GetMapping
-    public List<Cliente> listarClientes() {
-        return service.listarClientes();
+    public ResponseEntity<List<ClienteResponseDTO>> listar() {
+        return ResponseEntity.ok(service.listar());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> atualizar(@PathVariable Long id,
+                                                        @Valid @RequestBody ClienteRequestDTO dto) {
+        return ResponseEntity.ok(service.atualizar(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

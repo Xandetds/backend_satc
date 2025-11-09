@@ -1,20 +1,21 @@
 package br.com.backend.Backend_satc.arquitetura1.mapper;
 
-import br.com.backend.Backend_satc.arquitetura1.dto.ClienteDTO;
+import br.com.backend.Backend_satc.arquitetura1.dto.request.ClienteRequestDTO;
+import br.com.backend.Backend_satc.arquitetura1.dto.response.ClienteResponseDTO;
 import br.com.backend.Backend_satc.arquitetura1.entity.Cliente;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-12T00:00:10-0300",
+    date = "2025-11-09T17:19:36-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22 (Oracle Corporation)"
 )
 @Component
 public class ClienteMapperImpl implements ClienteMapper {
 
     @Override
-    public Cliente toEntity(ClienteDTO dto) {
+    public Cliente toEntity(ClienteRequestDTO dto) {
         if ( dto == null ) {
             return null;
         }
@@ -30,18 +31,19 @@ public class ClienteMapperImpl implements ClienteMapper {
     }
 
     @Override
-    public ClienteDTO toDTO(Cliente entity) {
+    public ClienteResponseDTO toResponseDTO(Cliente entity) {
         if ( entity == null ) {
             return null;
         }
 
-        ClienteDTO clienteDTO = new ClienteDTO();
+        ClienteResponseDTO clienteResponseDTO = new ClienteResponseDTO();
 
-        clienteDTO.setNome( entity.getNome() );
-        clienteDTO.setCpf( entity.getCpf() );
-        clienteDTO.setEmail( entity.getEmail() );
-        clienteDTO.setEndereco( entity.getEndereco() );
+        clienteResponseDTO.setId( entity.getId() );
+        clienteResponseDTO.setNome( entity.getNome() );
+        clienteResponseDTO.setCpf( entity.getCpf() );
+        clienteResponseDTO.setEmail( entity.getEmail() );
+        clienteResponseDTO.setEndereco( entity.getEndereco() );
 
-        return clienteDTO;
+        return clienteResponseDTO;
     }
 }
