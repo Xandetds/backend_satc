@@ -60,7 +60,6 @@ public class ClienteService {
         var entity = repository.findById(id)
                 .orElseThrow(() -> new BusinessException("Cliente não encontrado"));
 
-        // Bloqueia exclusão se houver chamados ABERTOS para esse cliente
         if (chamadoRepository.existsByCliente_IdAndStatus(id, Status.ABERTO))
             throw new BusinessException("Cliente possui chamados em aberto");
 
